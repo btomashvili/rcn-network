@@ -1,8 +1,22 @@
 ### NANO LOAN ENGINE
-* createLoan(oracleContract, borrower, cosigner, cosignerFee, currncy, amount, interestRate, interestRatePunitory, duesIn, cancelableAt, expirationRequest) 
+* createLoan(oracleContract, borrower, cosigner, cosignerFee, currncy, amount, interestRate, interestRatePunitory, duesIn, cancelableAt, expirationRequest)
 
 Creates a loan request, the loan can be generated with any borrower, cosigner, and conditions; if the cosigner and borrower agree they must call the "approve" function.
 The creator of the loan is the caller of this function; this is useful to track which wallet created the loan.
+
+    @param oracleContract Address of the Oracle contract, if the loan does not use any oracle, this field should be 0x0.
+    @param borrower Address of the borrower
+    @param cosigner Address of the cosigner, 0x0 if the contract does not have a cosigner.
+    @param cosignerFee Defined on the same currency and unit that "amount"; this value is absolute and paid by the lender when the loan starts. If there is no cosigner, the fee must be 0.
+    @param currency The currency to use in the Oracle, if there is no Oracle, this field must remain empty.
+    @param amount The requested amount; currency and unit are defined by the Oracl if there is no Oracle present the currency is RCN, and the unit is wei.
+    @param interestRate The non-punitory interest rate by second, defined as a denominator of 10 000 000.
+    @param interestRatePunitory The punitory interest rate by second, defined as a denominator of 10 000 000. Ej: interestRate 11108571428571 = 28% Anual interest
+    @param duesIn The time in seconds that the borrower has in order to pay the debt after the lender lends the money.
+    @param cancelableAt Delta in seconds specifying how much interest should be added in advance, if the borrower paysentirely or partially the loan before this term, no extra interest will be deducted.
+    @param expirationRequest Timestamp of when the loan request expires, if the loan is not filled before this date, the request is no longer valid.
+
+
 
 * approve() Called by the members of the loan to show that they agree with the terms of the loan; the borrower and the cosigner must call this method before any lender could call the method "lend".
 
@@ -38,7 +52,7 @@ The creator of the loan is the caller of this function; this is useful to track 
 * destroyLiability(index)
 
    Destroys a previously created liability, also destroys the associated loan on the engine
-   
+
 * Withdraw tokens from the smart contract.
 * Transfering the ownership of the smart contract
 * Withdraw funds from a loan
