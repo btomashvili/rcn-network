@@ -26,8 +26,19 @@ The creator of the loan is the caller of this function; this is useful to track 
 
 #### COSIGNER METHODS
 
-* Creates a liability to pay a loan if the borrower defaults.
-* Destroys a previously created liability, also destroys the associated loan on the engine
+* createLiability(index, coverage, requiredArrears)
+
+  Creates a liability to pay a loan if the borrower defaults.
+
+        @param index Index of the loan
+        @param coverage Portion of the pending payment covered, between 0 and 100.
+        @param requiredArrears Time passed after the loan dueTime required to be considered a default.
+
+  
+* destroyLiability(index)
+
+   Destroys a previously created liability, also destroys the associated loan on the engine
+   
 * Withdraw tokens from the smart contract.
 * Transfering the ownership of the smart contract
 * Withdraw funds from a loan
